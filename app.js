@@ -10,13 +10,14 @@
   // de arquivos em disco
   var fs = require("fs");
 
-  //Importando módulo StringDecoder para tratar encoding de TXTs
+  // Importando módulo StringDecoder para tratar encoding de TXTs
   var StringDecoder = require("string_decoder").StringDecoder;
   var decoder = new StringDecoder("utf8");
 
   var formato = "";
   var output = "";
 
+  // Declara a interface do programa via Commander
   programa
     .version("1.0.0")
     .option("-i, --input <file>", "Arquivo TXT de entrada")
@@ -24,11 +25,13 @@
     .option("-f, --format <string>", "(Opcional) Formato de quebra de linha: CRLF (Windows) ou LF (Unix, padrão)")
     .parse(process.argv);
 
+  // Verifica se há input
   if(!programa.input){
     console.warn("Você precisa fornecer um TXT de entrada. Para ajuda consulte o help usando -h");
     return;
   }
 
+  // Tenta ler o TXT para executar o processamento de remoção de símbolos inúteis
   try {
     fs.readFile(programa.input, function (erro, dados) {
       if (erro) {
@@ -37,7 +40,9 @@
       }
       // Formato padrão da quebra de linha
       formato = programa.format || "LF";
+      // Arquivo padrão de output
       output = programa.output || "output.txt";
+      // Executa processamento e salvamento do arquivo conforme quebra de linha fornecida
       if(formato === "LF") salva(removeSimbolosInuteis(decoder.write(dados)), "\n", output);
       else if(formato === "CRLF") salva(removeSimbolosInuteis(decoder.write(dados)), "\r\n", output);
       else console.error("Formato de quebra de linha inválido");
@@ -100,6 +105,7 @@
     return [t2, v2, inicial, p2];
   }
 
+  // Puxa todos os símbolos aingíveis a partir de um conjunto de variáveis
   function calculaFecho(variaveis, simbolos, producoes) {
     for(var i = 0, l = variaveis.length; i < l; i++) {
       for(var j = 0, l2 = simbolos.length; j < l2; j++) {
@@ -112,6 +118,7 @@
     return variaveis;
   }
 
+  // Puxa todos os terminais atingíveis a partir de um conjunto de variáveis
   function calculaFechoVariavel(variaveis, simbolos, producoes) {
     var terminais = [];
     for(var i = 0, l = variaveis.length; i < l; i++) {
@@ -125,6 +132,7 @@
     return terminais;
   }
 
+  // Gera um conjunto novo de produções removendo os símbolos inúteis do conjunto de produções fornecido
   function geraNovasProducoes(producoes, simbolos) {
     var de, para, novasProducoes = [];
     for(var i = 0, l = producoes.length; i < l; i++) {
@@ -138,6 +146,7 @@
     return novasProducoes;
   }
 
+  // Valida todas as variáveis que geram símbolos terminais
   function calculaVariavelTerminal(terminais, variaveis, v1, producoes) {
     var tv1 = v1[0] ? v1 : terminais;
     for(var i = 0, l = variaveis.length; i < l; i++) {
@@ -151,6 +160,7 @@
     return v1;
   }
 
+  // Função utilitária que verifica se existe alguma produção no conjunto producoes que leve da variável s1 para a s2
   function existeProducao(producoes, s1, s2) {
     var de, para;
     for(var i = 0, l = producoes.length; i < l; i++) {
