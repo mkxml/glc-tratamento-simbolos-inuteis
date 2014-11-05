@@ -1,4 +1,4 @@
-# Use only Unix line feeds
+# Usando apenas LFs para arquivos de código
 *.js     text eol=lf
 *.json   text eol=lf
 *.md     text eol=lf
