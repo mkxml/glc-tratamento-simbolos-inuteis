@@ -175,12 +175,13 @@
 
   //Função que valida a existência de um símbolo em um arranjo bi-dimensional
   function existeSimbolosNoArranjo(simbolos, arr) {
-    for(var i = 0, l = simbolos.length; i < l; i++) {
-      for(var j = 0, l2 = arr.length; j < l2; j++) {
-        if(simbolos[i] === arr[j]) return true;
+    var achou = true;
+    for(var i = 0, l = arr.length; i < l; i++) {
+      if(simbolos.indexOf(arr[i]) < 0) {
+        achou = false;
       }
     }
-    return false;
+    return achou;
   }
 
   // --------- LEITURA E GRAVAÇÃO DO TXT ------------- //
