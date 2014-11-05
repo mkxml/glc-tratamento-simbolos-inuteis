@@ -1,0 +1,27 @@
+{
+  "name": "glc-tratamento-simbolos-inuteis",
+  "version": "1.0.0",
+  "description": "Pequeno programa em JS para tratamento (retirada) de símbolos inúteis em gramáticas livres do contexto",
+  "publish": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mkautzmann/glc-tratamento-simbolos-inuteis"
+  },
+  "bugs": "https://github.com/mkautzmann/glc-tratamento-simbolos-inuteis/issues",
+  "contributors": [
+    {
+      "name": "Matheus Kautzmann",
+      "email": "kautzmann5@gmail.com",
+      "url": "https://github.com/mkautzmann/"
+    },
+    {
+      "name": "Rômulo Alves",
+      "email": "romulo@romuloalves.com.br",
+      "url": "https://github.com/romuloalves/"
+    }
+  ],
+  "license": "MIT License",
+  "dependencies": {
+    "commander": "^2.5.0"
+  }
+}
