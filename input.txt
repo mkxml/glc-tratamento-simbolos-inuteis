@@ -1,0 +1,1 @@
+expr fator termo id nil t1x y + * ( ) PI dexprexpr -> termoexpr -> expr + termotermo -> fatortermo -> termo * fatorfator -> idfator -> PIfator -> ( expr )id -> xid -> ynil ->t1 -> dt2 -> expr
