@@ -1,5 +1,4 @@
 (function() {
-
   "use strict";
 
   // ----------------- INTERFACE --------------------- //
@@ -15,10 +14,14 @@
   var StringDecoder = require("string_decoder").StringDecoder;
   var decoder = new StringDecoder("utf8");
 
+  var formato = "";
+  var output = "";
+
   programa
     .version("1.0.0")
     .option("-i, --input <file>", "Arquivo TXT de entrada")
-    .option("-o, --output <file>", "Caminho para depósito do TXT de saída")
+    .option("-o, --output <file>", "(Opcional) Caminho para depósito do TXT de saída")
+    .option("-f, --format <string>", "(Opcional) Formato de quebra de linha: CRLF (Windows) ou LF (Unix, padrão)")
     .parse(process.argv);
 
   if(!programa.input){
@@ -32,7 +35,12 @@
         console.error("Arquivo input não existe ou com acesso bloqueado!");
         return;
       }
-      salva(removeSimbolosInuteis(decoder.write(dados)));
+      // Formato padrão da quebra de linha
+      formato = programa.format || "LF";
+      output = programa.output || "output.txt";
+      if(formato === "LF") salva(removeSimbolosInuteis(decoder.write(dados)), "\n", output);
+      else if(formato === "CRLF") salva(removeSimbolosInuteis(decoder.write(dados)), "\r\n", output);
+      else console.error("Formato de quebra de linha inválido");
     });
   }
   catch(e) {
@@ -192,8 +200,34 @@
   }
 
   // Função que salva uma string em um txt no caminho passado para o programa
-  function salva(dados) {
-    return "";
+  function salva(dados, quebra, caminho) {
+    var terminais = dados[0];
+    var variaveis = dados[1];
+    var inicial = dados[2];
+    var regras = dados[3];
+    var txt = "";
+
+    txt += variaveis.join(" ") + quebra;
+    txt += terminais.join(" ") + quebra;
+    txt += inicial + quebra;
+
+    for(var i = 0, l = regras.length; i < l; i++) {
+      txt += regras[i].join(" ");
+      txt += quebra;
+    }
+
+    try {
+      fs.writeFile(caminho, txt, function(err){
+        if(err) {
+          console.error("Não foi possível escrever o arquivo, verifique se o diretório existe e há permissão de escrita.");
+          return;
+        }
+        console.log("Processo concluído, arquivo salvo: " + caminho);
+      });
+    }
+    catch(e) {
+      console.error("Não foi possível escrever o arquivo, verifique se o diretório existe e há permissão de escrita.");
+    }
   }
 
 }());
