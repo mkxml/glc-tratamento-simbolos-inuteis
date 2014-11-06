@@ -96,7 +96,7 @@
       ct = t2.length;
       v2 = calculaFecho(v2, v1, p1);
       t2 = calculaFechoVariavel(v2, t, p1);
-    } while(cv !== v2.length && ct !== t2.length);
+    } while(cv !== v2.length || ct !== t2.length);
 
     // Gera as novas produções
     p2 = geraNovasProducoes(p1, v2.concat(t2));
