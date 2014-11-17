@@ -33,7 +33,7 @@ O programa foi desenvolvido para a disciplina de
 
 ## Regras
 
-Para ser compatível com o programa o programa deve respeitar algumas
+Para ser compatível com o programa o layout deve respeitar algumas
 regras, são elas:
 
 - A primeira linha do input deve declarar as **variáveis** utilizadas na GLC;
